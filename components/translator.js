@@ -5,32 +5,29 @@ const britishOnly = require("./british-only.js");
 
 class Translator {
   translate(phrase, mode) {
+    if (!/([.?!:;]$)/.test(phrase)) phrase = phrase + ".";
     const innitial = phrase;
     if (mode == "american-to-british") {
       for (let word in americanOnly) {
         phrase = phrase.replace(
-          new RegExp(word + " ", "ig"),
-          '<span class="highlight">' + americanOnly[word] + "</span> "
-        );
-        phrase = phrase.replace(
-          new RegExp(word + "\\.", "ig"),
-          '<span class="highlight">' + americanOnly[word] + "</span>."
+          new RegExp(word + "(\\W)", "ig"),
+          '<span class="highlight">' + americanOnly[word] + "</span>$1"
         );
       }
       for (let word in americanToBritishSpelling) {
         phrase = phrase.replace(
-          new RegExp(word, "ig"),
+          new RegExp(word + "(\\W)", "ig"),
           '<span class="highlight">' +
             americanToBritishSpelling[word] +
-            "</span>"
+            "</span>$1"
         );
       }
       for (let word in americanToBritishTitles) {
         phrase = phrase.replace(
-          new RegExp(word + " ", "ig"),
+          new RegExp(word + "(\\W)", "ig"),
           '<span class="highlight">' +
             americanToBritishTitles[word] +
-            "</span> "
+            "</span>$1"
         );
       }
       phrase = phrase.replace(
@@ -41,24 +38,20 @@ class Translator {
     if (mode == "british-to-american") {
       for (let word in britishOnly) {
         phrase = phrase.replace(
-          new RegExp(word + " ", "ig"),
-          '<span class="highlight">' + britishOnly[word] + "</span> "
-        );
-        phrase = phrase.replace(
-          new RegExp(word + "\\.", "ig"),
-          '<span class="highlight">' + britishOnly[word] + "</span>."
+          new RegExp(word + "(\\W)", "ig"),
+          '<span class="highlight">' + britishOnly[word] + "</span>$1"
         );
       }
       for (let word in americanToBritishSpelling) {
         phrase = phrase.replace(
-          new RegExp(americanToBritishSpelling[word], "ig"),
-          '<span class="highlight">' + word + "</span>"
+          new RegExp(americanToBritishSpelling[word] + "(\\W)", "ig"),
+          '<span class="highlight">' + word + "</span>$1"
         );
       }
       for (let word in americanToBritishTitles) {
         phrase = phrase.replace(
-          new RegExp(americanToBritishTitles[word] + " ", "ig"),
-          '<span class="highlight">' + word + "</span> "
+          new RegExp(americanToBritishTitles[word] + "(\\W)", "ig"),
+          '<span class="highlight">' + word + "</span>$1"
         );
       }
       phrase = phrase.replace(

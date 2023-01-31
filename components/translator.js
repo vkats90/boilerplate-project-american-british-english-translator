@@ -9,8 +9,12 @@ class Translator {
     if (mode == "american-to-british") {
       for (let word in americanOnly) {
         phrase = phrase.replace(
-          new RegExp(word, "ig"),
-          '<span class="highlight">' + americanOnly[word] + "</span>"
+          new RegExp(word + " ", "ig"),
+          '<span class="highlight">' + americanOnly[word] + "</span> "
+        );
+        phrase = phrase.replace(
+          new RegExp(word + "\\.", "ig"),
+          '<span class="highlight">' + americanOnly[word] + "</span>."
         );
       }
       for (let word in americanToBritishSpelling) {
@@ -23,8 +27,10 @@ class Translator {
       }
       for (let word in americanToBritishTitles) {
         phrase = phrase.replace(
-          new RegExp(word, "ig"),
-          '<span class="highlight">' + americanToBritishTitles[word] + "</span>"
+          new RegExp(word + " ", "ig"),
+          '<span class="highlight">' +
+            americanToBritishTitles[word] +
+            "</span> "
         );
       }
       phrase = phrase.replace(
@@ -35,8 +41,12 @@ class Translator {
     if (mode == "british-to-american") {
       for (let word in britishOnly) {
         phrase = phrase.replace(
-          new RegExp(word, "ig"),
-          '<span class="highlight">' + britishOnly[word] + "</span>"
+          new RegExp(word + " ", "ig"),
+          '<span class="highlight">' + britishOnly[word] + "</span> "
+        );
+        phrase = phrase.replace(
+          new RegExp(word + "\\.", "ig"),
+          '<span class="highlight">' + britishOnly[word] + "</span>."
         );
       }
       for (let word in americanToBritishSpelling) {
@@ -48,7 +58,7 @@ class Translator {
       for (let word in americanToBritishTitles) {
         phrase = phrase.replace(
           new RegExp(americanToBritishTitles[word] + " ", "ig"),
-          '<span class="highlight">' + word + "</span>"
+          '<span class="highlight">' + word + "</span> "
         );
       }
       phrase = phrase.replace(
@@ -56,7 +66,6 @@ class Translator {
         '<span class="highlight">$1:$2</span>'
       );
     }
-    console.log(phrase);
     if (innitial == phrase) return "Everything looks good to me!";
     return phrase;
   }
